@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.ecoactivity.caica"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.ecoactivity.caica"
