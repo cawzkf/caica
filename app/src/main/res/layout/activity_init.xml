@@ -9,104 +9,71 @@
     android:background="@drawable/wall2"
     android:scaleType="centerCrop">
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:id="@+id/principal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <TextView
-            android:id="@+id/texto_titulo"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Caiçá"
-            android:fontFamily="serif-monospace"
-            android:textSize="55sp"
-            android:textStyle="bold"
-            android:textColor="@color/preto"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="30dp"/>
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/texto_subtitulo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="60dp"
-            android:text="Plantas Medicinais"
-            android:textColor="@color/verde_medio"
-            android:textSize="16sp"
-            android:fontFamily="serif-monospace"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/texto_titulo"/>
+            <TextView
+                android:id="@+id/texto_titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Caiçá"
+                android:fontFamily="serif-monospace"
+                android:textSize="55sp"
+                android:textStyle="bold"
+                android:textColor="@color/preto"
+                android:layout_marginTop="30dp"
+                android:gravity="center"/>
 
-        <ImageView
-            android:id="@+id/icone_planta"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:background="@color/verde_escuro"
-            app:layout_constraintTop_toBottomOf="@id/texto_subtitulo"
-            app:layout_constraintStart_toStartOf="parent"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/texto_subtitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="60dp"
+                android:text="Plantas Medicinais"
+                android:textColor="@color/verde_medio"
+                android:textSize="16sp"
+                android:fontFamily="serif-monospace"
+                android:gravity="center"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
-        android:orientation="vertical"
-        android:padding="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/principal">
+            <ImageView
+                android:id="@+id/icone_planta"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:background="@color/verde_escuro"
+                android:scaleType="centerCrop"
+                android:layout_marginBottom="30dp"/>
 
+            <Button
+                android:id="@+id/botao_escanear"
+                android:layout_width="280dp"
+                android:layout_height="63dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/verde_medio"
+                android:fontFamily="serif-monospace"
+                android:text="Escanear"
+                android:textColor="@color/branco"
+                android:textSize="30sp"/>
 
-        <Button
-            android:id="@+id/botao_escanear"
-            android:layout_width="280dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/verde_medio"
-            android:fontFamily="serif-monospace"
-            android:text="Escanear"
-            android:textColor="@color/branco"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <Button
+                android:id="@+id/botao_catalogo"
+                android:layout_width="280dp"
+                android:layout_height="63dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/verde_medio"
+                android:fontFamily="serif-monospace"
+                android:text="Catálogo"
+                android:textColor="@color/branco"
+                android:textSize="30sp"/>
+        </LinearLayout>
+    </ScrollView>
 
-        <Button
-            android:id="@+id/botao_catalogo"
-            android:layout_width="280dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/verde_medio"
-            android:fontFamily="serif-monospace"
-            android:text="Catálogo"
-            android:textColor="@color/branco"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/botao_escanear" />
-
-
-    </LinearLayout>
-</LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
