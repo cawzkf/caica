@@ -7,7 +7,6 @@ Este aplicativo, desenvolvido em Kotlin no Android Studio, utiliza inteligência
 - Identificação de plantas medicinais através de imagens
 - Informações detalhadas sobre cada planta
 - Histórico de análises realizadas
-- Suporte a múltiplos idiomas
 - Integração com banco de dados SQL para ampliar o catálogo
 
 ## Tecnologias Utilizadas
