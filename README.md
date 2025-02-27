@@ -61,12 +61,6 @@ Ou, abra o projeto no Android Studio e clique em "Run".
 2. Ajustes finos (fine-tuning) do modelo conforme necessário.
 3. Implementação do modelo para realizar inferências em imagens, detectando e identificando plantas medicinais.
 
-## Capturas de Tela
-
-- Tela 1
-- Tela 2
-- Tela 3
-
 ## GitHub
 
 Repositório: [caica](https://github.com/cawzkf/caica.git)
