@@ -7,34 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".CatalogoActivity"
     android:id="@+id/catalogo"
-    android:background="@color/bege_claro">
+    android:background="@color/verde_claro">
 
 
-    <TextView
-        android:id="@+id/titulo_catalogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Catálogo de Plantas Medicinais"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        android:fontFamily="serif"
-        android:textColor="@color/preto"
-        android:layout_marginTop="20dp"
+    <EditText
+        android:id="@+id/barraPesquisa"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:singleLine="true"
+        android:inputType="text"
+        android:imeOptions="actionSearch"
+        android:foregroundGravity="center"
+        android:background="@drawable/barra"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="35dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-    <TextView
-        android:id="@+id/subtitulo_catalogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Indigenous Medicine Identification App"
-        android:textSize="14sp"
-        android:fontFamily="serif"
-        android:textColor="@color/preto"
-        app:layout_constraintTop_toBottomOf="@id/titulo_catalogo"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -43,7 +36,8 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/subtitulo_catalogo"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/barraPesquisa"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
