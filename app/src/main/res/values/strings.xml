@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">caica</string>
+    <string name="imagem_da_planta">card_planta</string>
 </resources>
