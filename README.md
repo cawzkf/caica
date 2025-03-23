@@ -1,7 +1,6 @@
 # Aplicativo de Análise e Identificação de Plantas Medicinais Indígenas
 
-Este aplicativo, desenvolvido em Kotlin no Android Studio, tem como objetivo identificar e analisar plantas medicinais indígenas. Ele conta com um catálogo de plantas e um sistema de identificação por **comparação de imagens**, sem utilizar modelos de inteligência artificial treinados.
-
+Este aplicativo, desenvolvido em Kotlin no Android Studio, tem como objetivo identificar e analisar plantas medicinais indígenas.
 ## Funcionalidades
 
 - Identificação de plantas medicinais por comparação de imagens
