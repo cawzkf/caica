@@ -1,5 +1,7 @@
 package com.ecoactivity.caica
 
+import com.google.gson.annotations.SerializedName
+
 data class Planta(
     val id: Int,
     val nome_cientifico: String,
@@ -16,5 +18,7 @@ data class Planta(
     val impacto_social: String?,
     val data_descoberta: String?,
     val observacoes: String?,
-    val uso_medicinal: String
+    val uso_medicinal: String,
+    @SerializedName("IMAGEM")
+    val imagem: String?
 )
