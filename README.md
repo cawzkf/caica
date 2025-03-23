@@ -1,23 +1,20 @@
 # Aplicativo de Análise e Identificação de Plantas Medicinais Indígenas
 
-Este aplicativo, desenvolvido em Kotlin no Android Studio, utiliza inteligência artificial para identificar e analisar plantas medicinais indígenas. Através de um modelo de visão computacional, o aplicativo fornece informações detalhadas sobre as plantas, como nome, nome científico, usos, indicações, contraindicações e localização.
+Este aplicativo, desenvolvido em Kotlin no Android Studio, tem como objetivo identificar e analisar plantas medicinais indígenas. Ele conta com um catálogo de plantas e um sistema de identificação por **comparação de imagens**, sem utilizar modelos de inteligência artificial treinados.
 
 ## Funcionalidades
 
-- Identificação de plantas medicinais através de imagens
-- Informações detalhadas sobre cada planta
-- Histórico de análises realizadas
-- Integração com banco de dados SQL para ampliar o catálogo
+- Identificação de plantas medicinais por comparação de imagens
+- Exibição de informações detalhadas sobre cada planta (nome popular, nome científico, usos, indicações, entre outros)
+- Integração com banco de dados SQL Server para alimentar a seção do catálogo
 
 ## Tecnologias Utilizadas
 
-- Kotlin - Linguagem de programação
-- Android Studio - IDE de desenvolvimento
-- Keras - Treinamento do modelo no Kaggle
-- TensorFlow - Backend para aprendizado profundo
-- OpenCV & Albumentations - Pré-processamento de imagens
-- ONNX / TensorFlow Lite - Otimização e deploy do modelo
-- SQL - Banco de dados para armazenamento de informações
+- Kotlin – Linguagem principal do aplicativo
+- Android Studio – Ambiente de desenvolvimento
+- OpenCV – Biblioteca para comparação de imagens (usada no backend)
+- Amazon Web Services (S3, Lambda, RDS) – Para armazenamento, processamento e gerenciamento dos dados
+- SQL Server – Banco de dados local utilizado para fornecer os dados exibidos no catálogo
 
 ## Instalação e Configuração
 
@@ -25,44 +22,43 @@ Este aplicativo, desenvolvido em Kotlin no Android Studio, utiliza inteligência
 
 - Android Studio instalado
 - JDK atualizado
-- Conta no Firebase (se aplicável)
-- Banco de dados SQL configurado
+- Servidor local com SQL Server ativo
+- API (em Node.js, .NET, ou outra tecnologia) para servir os dados do banco
+- Conta na AWS com S3, Lambda e RDS configurados
 
 ### Clonando o repositório
-```sh
+
+```bash
 git clone https://github.com/cawzkf/caica.git
 cd caica
 ```
 
-### Configuração do Firebase (se necessário)
-
-1. Crie um projeto no Firebase.
-2. Baixe o arquivo `google-services.json` e coloque na pasta `app/`.
-3. Ative os serviços necessários (Auth, Firestore, Realtime Database, etc.).
-
-### Instalação das Bibliotecas Essenciais
-
-Para o funcionamento do modelo de identificação, instale as seguintes bibliotecas:
-```sh
-pip install keras tensorflow opencv-python albumentations onnx tensorflow-lite
-```
-
 ### Rodando o projeto
 
-```sh
+```bash
 ./gradlew assembleDebug
 ```
-Ou, abra o projeto no Android Studio e clique em "Run".
 
-## Treinamento e Implementação
+Ou abra o projeto no Android Studio e clique em "Run".
 
-1. Treinamento do modelo no Kaggle utilizando Keras e TensorFlow.
-2. Ajustes finos (fine-tuning) do modelo conforme necessário.
-3. Implementação do modelo para realizar inferências em imagens, detectando e identificando plantas medicinais.
+## Identificação de Plantas
 
-## GitHub
+O processo de identificação ocorre da seguinte forma:
 
-Repositório: [caica](https://github.com/cawzkf/caica.git)
+1. O usuário tira ou seleciona uma imagem da planta.
+2. A imagem é enviada para o serviço AWS S3.
+3. Uma função Lambda, utilizando OpenCV, realiza a comparação da imagem enviada com imagens já cadastradas no sistema.
+4. Se houver uma correspondência com alto nível de similaridade, o ID da planta correspondente é retornado.
+5. O app usa esse ID para buscar as informações da planta no banco SQL e exibir para o usuário.
+
+## Backend
+
+- API REST responsável por consultar os dados no banco SQL Server e retornar ao app.
+- Serviço Lambda com script em Python e OpenCV para análise de similaridade entre imagens.
+- Banco de dados local (SQL Server) para o catálogo atual, com possibilidade de migração futura para o Amazon RDS.
+
+## Repositório
+
+Repositório oficial: [caica](https://github.com/cawzkf/caica.git)
 
 Desenvolvido por cawzkf.
-
