@@ -2,12 +2,12 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="180dp"
+    android:layout_width="160dp"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="6dp"
-    android:backgroundTint="@color/verde_claro">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="8dp"
+    app:cardBackgroundColor="@color/branco">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,10 +19,11 @@
         <ImageView
             android:id="@+id/imagem_planta"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="110dp"
             android:scaleType="centerCrop"
+            android:contentDescription="@string/imagem_da_planta"
             android:background="@drawable/cardview_plantas"
-            android:contentDescription="@string/imagem_da_planta" />
+            android:clipToOutline="true" />
 
         <TextView
             android:id="@+id/nome_planta"
@@ -31,8 +32,11 @@
             android:text="Nome da Planta"
             android:textColor="@color/preto"
             android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="10dp" />
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:ellipsize="end" />
 
         <TextView
             android:id="@+id/nome_cientifico"
@@ -40,9 +44,10 @@
             android:layout_height="wrap_content"
             android:text="Nome Científico"
             android:textColor="@color/verde_escuro"
-            android:textSize="13sp"
-            android:layout_marginTop="4dp"/>
-
+            android:textSize="12sp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:ellipsize="end"/>
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>
