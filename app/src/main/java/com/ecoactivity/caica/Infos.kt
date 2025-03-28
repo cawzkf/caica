@@ -6,13 +6,23 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 
-class DetalhesPlantaActivity : AppCompatActivity() {
+class Infos : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)/*
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_infos)
 
-        // Recupera a planta do Intent, garantindo que não seja nulo
-        val planta = intent.getParcelableExtra<Planta>("planta")
+        val planta: Planta? = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("planta", Planta::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableExtra("planta")
+        }
+
+
+        if (planta == null) {
+            finish()
+            return
+        }
 
         // Referências dos componentes da UI
         val nomePlanta = findViewById<TextView>(R.id.nome_planta)
@@ -20,21 +30,16 @@ class DetalhesPlantaActivity : AppCompatActivity() {
         val descricao = findViewById<TextView>(R.id.descricao)
         val imagemPlanta = findViewById<ImageView>(R.id.imagem_planta)
 
-        // Verifica se a planta não é nula antes de atribuir os valores
-        planta?.let {
-            nomePlanta.text = it.nome_popular ?: "Nome desconhecido"
-            nomeCientifico.text = it.nome_cientifico ?: "Nome científico desconhecido"
-            descricao.text = it.descricao_botanica ?: "Sem descrição disponível"
+        // Atribui os valores à UI
+        nomePlanta.text = planta.NOME_POPULAR ?: "Nome desconhecido"
+        nomeCientifico.text = planta.NOME_CIENTIFICO ?: "Nome científico desconhecido"
+        descricao.text = planta.DESCRICAO_BOTANICA ?: "Sem descrição disponível"
 
-            // Carrega a imagem com Glide, adicionando um placeholder caso falhe
-            Glide.with(this)
-                .load(it.imagem)
-                .placeholder(R.drawable.placeholder) // Imagem padrão caso falhe
-                .error(R.drawable.error_image) // Imagem de erro se não carregar
-                .into(imagemPlanta)
-        } ?: run {
-            // Se a planta for nula, fecha a tela para evitar exibição incorreta
-            finish()
-        }
-    */}
+        // Carrega a imagem com Glide
+        Glide.with(this)
+            .load(planta.IMAGEM)
+            .placeholder(R.drawable.placeholder) // Imagem padrão
+            .error(R.drawable.error_image) // Imagem de erro
+            .into(imagemPlanta)
+    }
 }

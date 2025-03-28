@@ -1,5 +1,7 @@
 package com.ecoactivity.caica
 
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +14,12 @@ class PlantaAdapter(private val lista: List<Planta>) :
     RecyclerView.Adapter<PlantaAdapter.PlantaViewHolder>() {
 
     inner class PlantaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nome: TextView = itemView.findViewById(R.id.nome_planta)
+        val nomePopular: TextView = itemView.findViewById(R.id.nome_planta)
         val nomeCientifico: TextView = itemView.findViewById(R.id.nome_cientifico)
         val imagemView: ImageView = itemView.findViewById(R.id.imagem_planta)
 
         fun bind(planta: Planta) {
-            nome.text = planta.NOME_POPULAR ?: "Nome desconhecido"
+            nomePopular.text = planta.NOME_POPULAR ?: "Nome desconhecido"
             nomeCientifico.text = planta.NOME_CIENTIFICO ?: "Nome científico desconhecido"
 
             // Carrega a imagem se existir
@@ -29,6 +31,14 @@ class PlantaAdapter(private val lista: List<Planta>) :
                     .into(imagemView)
             } ?: run {
                 imagemView.setImageResource(R.drawable.error_image)
+            }
+
+            // Configura o clique no item para abrir a tela Infos
+            itemView.setOnClickListener {
+                val intent = Intent(itemView.context, Infos::class.java)
+                intent.putExtra("planta", planta)
+                Log.d("PlantaAdapter", "Enviando para Infos: ${planta.NOME_POPULAR} - ${planta.IMAGEM ?: "Sem imagem"}")
+                itemView.context.startActivity(intent)
             }
         }
     }
@@ -45,4 +55,3 @@ class PlantaAdapter(private val lista: List<Planta>) :
 
     override fun getItemCount(): Int = lista.size
 }
-

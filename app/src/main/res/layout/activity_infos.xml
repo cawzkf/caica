@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/branco">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/verde_escuro"
+        android:textSize="20sp"
+        android:text="Planta"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:gravity="center"/>
+
+    <ImageView
+        android:id="@+id/imagem_planta"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/barra"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/barra"
+        android:padding="12dp"
+        android:layout_marginTop="8dp"
+        android:elevation="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome popular:"
+            android:textColor="@color/verde_escuro"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingTop="4dp"/>
+
+        <TextView
+            android:id="@+id/nome_planta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/preto"
+            android:textSize="14sp"
+            android:paddingBottom="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome científico:"
+            android:textColor="@color/verde_escuro"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:paddingTop="4dp"/>
+
+        <TextView
+            android:id="@+id/nome_cientifico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/preto"
+            android:textSize="14sp"
+            android:paddingBottom="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Informações:"
+            android:textColor="@color/verde_escuro"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:paddingTop="4dp"/>
+
+        <TextView
+            android:id="@+id/descricao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/preto"
+            android:textSize="14sp"
+            android:paddingTop="4dp"
+            android:lineSpacingExtra="4dp"/>
+    </LinearLayout>
+</LinearLayout>

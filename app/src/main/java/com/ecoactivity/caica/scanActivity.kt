@@ -1,8 +1,13 @@
 package com.ecoactivity.caica
 
 import android.Manifest
+import android.content.ContentValues
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.Toast
@@ -13,9 +18,6 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Locale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -38,11 +40,7 @@ class scanActivity : AppCompatActivity() {
 
         captureButton.setOnClickListener {
             if (allPermissionsGranted()) {
-                if (imageCapture != null) {
-                    takePicture()
-                } else {
-                    Toast.makeText(this, "Inicializando câmera, aguarde...", Toast.LENGTH_SHORT).show()
-                }
+                takePicture()
             } else {
                 requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
             }
@@ -58,11 +56,10 @@ class scanActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
-        val granted = permissions.entries.all { it.key == Manifest.permission.CAMERA && it.value }
-        if (granted) {
+        if (permissions.all { it.value }) {
             startCamera()
         } else {
-            Toast.makeText(this, "Permissão da câmera negada", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Permissões negadas", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -75,13 +72,12 @@ class scanActivity : AppCompatActivity() {
 
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
-
             val preview = Preview.Builder().build().also {
                 it.setSurfaceProvider(previewView.surfaceProvider)
             }
-
-            imageCapture = ImageCapture.Builder().build()
-
+            imageCapture = ImageCapture.Builder()
+                .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                .build()
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
             try {
@@ -94,29 +90,47 @@ class scanActivity : AppCompatActivity() {
     }
 
     private fun takePicture() {
-        val outputDir = externalMediaDirs.firstOrNull() ?: filesDir
+        val imageCapture = imageCapture ?: run {
+            Toast.makeText(this, "Erro: câmera não inicializada", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-        val photoFile = File(
-            outputDir,
-            SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS", Locale.US)
-                .format(System.currentTimeMillis()) + ".jpg"
-        )
-
-        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-
-        imageCapture?.takePicture(
-            outputOptions,
-            ContextCompat.getMainExecutor(this),
-            object : ImageCapture.OnImageSavedCallback {
-                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    Toast.makeText(applicationContext, "Foto salva: ${photoFile.absolutePath}", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onError(exception: ImageCaptureException) {
-                    Toast.makeText(applicationContext, "Erro ao capturar foto: ${exception.message}", Toast.LENGTH_SHORT).show()
-                }
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, "IMG_${System.currentTimeMillis()}.jpg")
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/Caica")
             }
-        )
+        }
+
+        val outputUri: Uri? = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+        if (outputUri != null) {
+            val outputOptions = ImageCapture.OutputFileOptions.Builder(contentResolver, outputUri, contentValues).build()
+
+            imageCapture.takePicture(
+                outputOptions,
+                ContextCompat.getMainExecutor(this),
+                object : ImageCapture.OnImageSavedCallback {
+                    override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                        Toast.makeText(applicationContext, "Foto salva na galeria!", Toast.LENGTH_SHORT).show()
+                        Log.d("CameraX", "Foto salva em: $outputUri")
+
+
+                        val scanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
+                        scanIntent.data = outputUri
+                        sendBroadcast(scanIntent)
+                    }
+
+                    override fun onError(exception: ImageCaptureException) {
+                        Toast.makeText(applicationContext, "Erro ao capturar foto: ${exception.message}", Toast.LENGTH_SHORT).show()
+                        Log.e("CameraX", "Erro ao salvar imagem", exception)
+                    }
+                }
+            )
+        } else {
+            Toast.makeText(applicationContext, "Erro ao acessar a galeria", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroy() {
@@ -125,8 +139,15 @@ class scanActivity : AppCompatActivity() {
     }
 
     companion object {
-        private val REQUIRED_PERMISSIONS = arrayOf(
+        private val REQUIRED_PERMISSIONS = mutableListOf(
             Manifest.permission.CAMERA
-        )
+        ).apply {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                add(Manifest.permission.READ_EXTERNAL_STORAGE)
+                add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            } else {
+                add(Manifest.permission.READ_MEDIA_IMAGES)
+            }
+        }.toTypedArray()
     }
 }

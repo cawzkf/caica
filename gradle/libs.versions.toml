@@ -17,8 +17,8 @@ cameraLifecycle = "1.4.1"
 
 # Networking
 retrofit = "2.9.0"
-okhttp = "4.12.0" # Adicionei esta linha
-glide = "4.16.0"  # Atualizei a versão
+okhttp = "4.12.0"
+glide = "4.16.0"
 
 # Coroutines
 kotlinxCoroutinesAndroid = "1.7.3"
@@ -46,7 +46,7 @@ androidx-camera-extensions = { group = "androidx.camera", name = "camera-extensi
 # Networking
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" } # Adicionei
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 
 # Glide
@@ -68,3 +68,4 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
