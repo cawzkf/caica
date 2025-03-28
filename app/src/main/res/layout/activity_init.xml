@@ -5,7 +5,7 @@
     android:id="@+id/inicio"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wall2"
+    android:background="@color/branco"
     tools:context=".initActivity">
 
     <ScrollView
@@ -19,8 +19,7 @@
             android:orientation="vertical"
             android:gravity="center"
             android:padding="24dp"
-            android:layout_gravity="center"
-            android:background="#AAFFFFFF">
+            android:layout_gravity="center">
 
             <TextView
                 android:id="@+id/texto_titulo"
@@ -30,7 +29,7 @@
                 android:textSize="48sp"
                 android:textStyle="bold"
                 android:textColor="@color/verde_escuro"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 android:fontFamily="serif-monospace"
                 android:letterSpacing="0.05"
                 android:gravity="center" />
@@ -42,7 +41,7 @@
                 android:text="Plantas Medicinais"
                 android:textColor="@color/verde_medio"
                 android:textSize="18sp"
-                android:layout_marginBottom="55dp"
+                android:layout_marginBottom="15dp"
                 android:fontFamily="serif-monospace"
                 android:gravity="center"/>
 
@@ -50,12 +49,12 @@
                 android:id="@+id/icone_planta"
                 android:layout_width="220dp"
                 android:layout_height="220dp"
-                android:backgroundTint="@color/verde_claro"
+                android:layout_marginBottom="35dp"
+                android:background="@color/verde_claro"
                 android:scaleType="centerCrop"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/borda_init"/>
+                android:src="@drawable/logo_app" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/botao_escanear"
                 android:layout_width="280dp"
                 android:layout_height="60dp"
@@ -66,7 +65,7 @@
                 android:fontFamily="serif-monospace"
                 android:layout_marginTop="8dp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/botao_catalogo"
                 android:layout_width="280dp"
                 android:layout_height="60dp"

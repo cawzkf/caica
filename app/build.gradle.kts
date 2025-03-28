@@ -37,24 +37,35 @@ android {
 }
 
 dependencies {
-
+    // AndroidX Core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.constraintlayout)
+
+    // CameraX
     implementation(libs.androidx.camera.view)
     implementation(libs.androidx.camera.lifecycle)
-    testImplementation(libs.junit)
     implementation(libs.androidx.camera.core)
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.extensions)
+
+    // Test
+    testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Retrofit & Networking
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.okhttp3.logging.interceptor)
+
+    // Coroutines
     implementation(libs.kotlinx.coroutines.android)
+
+    // Glide (usando a versão do catalog)
     implementation(libs.glide)
-    kapt(libs.glide.compiler)
+    kapt(libs.glide.compiler) // Apenas esta linha para o kapt do Glide
 }
