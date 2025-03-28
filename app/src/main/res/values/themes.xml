@@ -2,9 +2,8 @@
 
     <style name="Base.Theme.Caica" parent="Theme.Material3.Light.NoActionBar">
 
-        <item name="android:statusBarColor">@color/verde_claro</item>
+        <item name="android:statusBarColor">@color/branco</item>
         <item name="android:windowLightStatusBar">false</item>
-
 
     </style>
 

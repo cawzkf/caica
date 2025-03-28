@@ -8,14 +8,29 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-
 class PlantaAdapter(private val lista: List<Planta>) :
     RecyclerView.Adapter<PlantaAdapter.PlantaViewHolder>() {
 
-    class PlantaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class PlantaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nome: TextView = itemView.findViewById(R.id.nome_planta)
         val nomeCientifico: TextView = itemView.findViewById(R.id.nome_cientifico)
-        val imagem: ImageView = itemView.findViewById(R.id.imagem_planta)
+        val imagemView: ImageView = itemView.findViewById(R.id.imagem_planta)
+
+        fun bind(planta: Planta) {
+            nome.text = planta.NOME_POPULAR ?: "Nome desconhecido"
+            nomeCientifico.text = planta.NOME_CIENTIFICO ?: "Nome científico desconhecido"
+
+            // Carrega a imagem se existir
+            planta.IMAGEM?.replace("localhost", "192.168.0.100")?.let { url ->
+                Glide.with(itemView.context)
+                    .load(url)
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.error_image)
+                    .into(imagemView)
+            } ?: run {
+                imagemView.setImageResource(R.drawable.error_image)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlantaViewHolder {
@@ -25,15 +40,9 @@ class PlantaAdapter(private val lista: List<Planta>) :
     }
 
     override fun onBindViewHolder(holder: PlantaViewHolder, position: Int) {
-        val planta = lista[position]
-        holder.nome.text = planta.nome_popular
-        holder.nomeCientifico.text = planta.nome_cientifico
-
-        Glide.with(holder.itemView.context)
-            .load(planta.imagem)
-           // .placeholder(R.drawable.placeholder)
-            .into(holder.imagem)
+        holder.bind(lista[position])
     }
 
     override fun getItemCount(): Int = lista.size
 }
+
