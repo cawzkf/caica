@@ -1,24 +1,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item>
         <shape android:shape="oval">
-            <solid android:color="#22000000" />
-            <size android:width="90dp" android:height="90dp"/>
-        </shape>
-    </item>
-
-
-    <item android:left="2dp" android:top="2dp" android:right="2dp" android:bottom="2dp">
-        <shape android:shape="oval">
-            <gradient
-                android:type="radial"
-                android:gradientRadius="80dp"
-                android:startColor="#FFFAFAFA"
-                android:endColor="#FFE0E0E0"
-                android:centerX="0.5"
-                android:centerY="0.5"/>
-            <stroke android:width="2dp" android:color="@color/verde_escuro"/>
+            <solid android:color="#FFFFFF"/>
+            <size android:width="70dp" android:height="70dp"/>
         </shape>
     </item>
 </layer-list>
-

@@ -9,77 +9,72 @@
     android:background="@color/branco"
     tools:context=".initActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:padding="24dp">
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/texto_titulo"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:text="Caíça"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            android:fontFamily="serif"
+            android:textColor="@color/preto"
+            android:letterSpacing="0.05"
+            android:gravity="center"
+            android:layout_marginBottom="4dp"/>
 
-            <TextView
-                android:id="@+id/texto_titulo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Caiçá"
-                android:textSize="50sp"
-                android:fontFamily="serif-serif"
-                android:textColor="@color/preto"
-                android:letterSpacing="0.05"
-                android:gravity="center"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="4dp"/>
+        <TextView
+            android:id="@+id/texto_subtitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Plantas Medicinais"
+            android:textColor="@color/preto"
+            android:fontFamily="serif"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"/>
 
-            <TextView
-                android:id="@+id/texto_subtitulo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Plantas Medicinais"
-                android:textColor="@color/preto"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:layout_marginBottom="20dp"/>
+        <ImageView
+            android:id="@+id/icone_planta"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/cha_transparente"
+            android:elevation="4dp"
+            android:layout_marginBottom="40dp"/>
 
-            <ImageView
-                android:id="@+id/icone_planta"
-                android:layout_width="240dp"
-                android:layout_height="240dp"
-                android:background="@drawable/button"
-                android:scaleType="fitCenter"
-                android:src="@drawable/logo_app"
-                android:elevation="4dp"
-                android:layout_marginBottom="40dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/botao_escanear"
+            android:layout_width="300dp"
+            android:layout_height="65dp"
+            android:text="Escanear"
+            app:cornerRadius="12dp"
+            android:textColor="@color/preto"
+            android:textSize="18sp"
+            android:backgroundTint="#DDDDDD"
+            android:fontFamily="serif"
+            android:elevation="6dp"
+            android:layout_marginTop="10dp"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/botao_escanear"
-                android:layout_width="300dp"
-                android:layout_height="65dp"
-                android:text="Escanear"
-                app:cornerRadius="12dp"
-                android:textColor="@color/branco"
-                android:textSize="20sp"
-                android:backgroundTint="@color/verde_escuro"
-                android:fontFamily="sans-serif"
-                android:layout_marginTop="12dp"
-                android:elevation="6dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/botao_catalogo"
+            android:layout_width="300dp"
+            android:layout_height="65dp"
+            android:text="Catálogo"
+            android:textColor="@color/preto"
+            android:textSize="18sp"
+            app:cornerRadius="12dp"
+            android:backgroundTint="#DDDDDD"
+            android:fontFamily="serif"
+            android:elevation="6dp"
+            android:layout_marginTop="10dp"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/botao_catalogo"
-                android:layout_width="300dp"
-                android:layout_height="65dp"
-                android:text="Catálogo"
-                android:textColor="@color/branco"
-                android:textSize="20sp"
-                app:cornerRadius="12dp"
-                android:backgroundTint="@color/verde_escuro"
-                android:fontFamily="sans-serif"
-                android:layout_marginTop="20dp"
-                android:elevation="6dp"/>
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

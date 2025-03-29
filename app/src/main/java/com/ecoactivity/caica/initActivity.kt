@@ -19,6 +19,7 @@ class initActivity : AppCompatActivity() {
             insets
         }
 
+
         val abrirCatalago = findViewById<Button>(R.id.botao_catalogo)
 
         val abrirScan = findViewById<Button>(R.id.botao_escanear)
