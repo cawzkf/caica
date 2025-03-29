@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class PlantaAdapter(private val lista: List<Planta>) :
+class PlantaAdapter(private var lista: List<Planta>) :
     RecyclerView.Adapter<PlantaAdapter.PlantaViewHolder>() {
 
     inner class PlantaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -22,18 +22,12 @@ class PlantaAdapter(private val lista: List<Planta>) :
             nomePopular.text = planta.NOME_POPULAR ?: "Nome desconhecido"
             nomeCientifico.text = planta.NOME_CIENTIFICO ?: "Nome científico desconhecido"
 
-            // Carrega a imagem se existir
-            planta.IMAGEM?.replace("localhost", "192.168.0.100")?.let { url ->
-                Glide.with(itemView.context)
-                    .load(url)
-                    .placeholder(R.drawable.placeholder)
-                    .error(R.drawable.error_image)
-                    .into(imagemView)
-            } ?: run {
-                imagemView.setImageResource(R.drawable.error_image)
-            }
+            Glide.with(itemView.context)
+                .load(planta.IMAGEM)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.error_image)
+                .into(imagemView)
 
-            // Configura o clique no item para abrir a tela Infos
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, Infos::class.java)
                 intent.putExtra("planta", planta)
@@ -44,8 +38,7 @@ class PlantaAdapter(private val lista: List<Planta>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlantaViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_planta, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_planta, parent, false)
         return PlantaViewHolder(view)
     }
 
@@ -54,4 +47,11 @@ class PlantaAdapter(private val lista: List<Planta>) :
     }
 
     override fun getItemCount(): Int = lista.size
+
+    fun atualizarLista(novaLista: List<Planta>) {
+        lista = novaLista
+        notifyDataSetChanged()
+    }
+
 }
+

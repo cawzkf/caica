@@ -18,28 +18,40 @@ class Infos : AppCompatActivity() {
             intent.getParcelableExtra("planta")
         }
 
-
         if (planta == null) {
             finish()
             return
         }
 
-        // Referências dos componentes da UI
+        // Referências da UI
         val nomePlanta = findViewById<TextView>(R.id.nome_planta)
         val nomeCientifico = findViewById<TextView>(R.id.nome_cientifico)
         val descricao = findViewById<TextView>(R.id.descricao)
+        val habitat = findViewById<TextView>(R.id.habitat)
+        val propriedadesMedicinais = findViewById<TextView>(R.id.propriedades_medicinais)
+        val usoTradicional = findViewById<TextView>(R.id.uso_tradicional)
+        val indicacoesTerapeuticas = findViewById<TextView>(R.id.indicacoes_terapeuticas)
         val imagemPlanta = findViewById<ImageView>(R.id.imagem_planta)
 
-        // Atribui os valores à UI
-        nomePlanta.text = planta.NOME_POPULAR ?: "Nome desconhecido"
-        nomeCientifico.text = planta.NOME_CIENTIFICO ?: "Nome científico desconhecido"
-        descricao.text = planta.DESCRICAO_BOTANICA ?: "Sem descrição disponível"
+        // Atribui os valores aos elementos da interface
+        nomePlanta.text = planta.NOME_POPULAR.ifEmpty { "Nome desconhecido" }
+        nomeCientifico.text = planta.NOME_CIENTIFICO.ifEmpty { "Nome científico desconhecido" }
+        descricao.text = planta.DESCRICAO_BOTANICA.orEmpty().ifEmpty { "Sem descrição disponível" }
+        habitat.text = planta.HABITAT.orEmpty().ifEmpty { "Habitat não informado" }
+        propriedadesMedicinais.text = planta.PROPRIEDADES_MEDICINAIS.orEmpty().ifEmpty { "Propriedades desconhecidas" }
+        usoTradicional.text = planta.USO_TRADICIONAL.orEmpty().ifEmpty { "Uso tradicional não informado" }
+        indicacoesTerapeuticas.text = planta.INDICACOES_TERAPEUTICAS.orEmpty().ifEmpty { "Sem indicações registradas" }
 
-        // Carrega a imagem com Glide
-        Glide.with(this)
-            .load(planta.IMAGEM)
-            .placeholder(R.drawable.placeholder) // Imagem padrão
-            .error(R.drawable.error_image) // Imagem de erro
-            .into(imagemPlanta)
+        val urlImagem = planta.IMAGEM ?: ""
+        if (urlImagem.isNotEmpty()) {
+            Glide.with(this)
+                .load(urlImagem)
+                .placeholder(R.drawable.icon_carregamento)
+                .error(R.drawable.icon_image)
+                .into(imagemPlanta)
+        } else {
+            imagemPlanta.setImageResource(R.drawable.placeholder)
+        }
+
     }
 }

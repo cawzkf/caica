@@ -1,14 +1,18 @@
 package com.ecoactivity.caica
 
 import android.Manifest
+import android.animation.ObjectAnimator
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
+import android.view.animation.LinearInterpolator
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -36,6 +40,7 @@ class scanActivity : AppCompatActivity() {
 
         previewView = findViewById(R.id.camera_preview)
         captureButton = findViewById(R.id.botao_capturar)
+
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         captureButton.setOnClickListener {
@@ -51,7 +56,11 @@ class scanActivity : AppCompatActivity() {
         } else {
             requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
         }
+
+
     }
+
+
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -59,12 +68,14 @@ class scanActivity : AppCompatActivity() {
         if (permissions.all { it.value }) {
             startCamera()
         } else {
-            Toast.makeText(this, "Permissões negadas", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Permissões negadas!", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
+    private fun allPermissionsGranted(): Boolean {
+        return REQUIRED_PERMISSIONS.all {
+            ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
+        }
     }
 
     private fun startCamera() {
@@ -75,61 +86,79 @@ class scanActivity : AppCompatActivity() {
             val preview = Preview.Builder().build().also {
                 it.setSurfaceProvider(previewView.surfaceProvider)
             }
+
             imageCapture = ImageCapture.Builder()
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                 .build()
+
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
             try {
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
             } catch (e: Exception) {
-                Log.e("Camerax", "Erro ao iniciar a câmera", e)
+                Log.e("CameraX", "Erro ao iniciar a câmera", e)
             }
         }, ContextCompat.getMainExecutor(this))
     }
 
     private fun takePicture() {
         val imageCapture = imageCapture ?: run {
-            Toast.makeText(this, "Erro: câmera não inicializada", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Erro: câmera não inicializada!", Toast.LENGTH_SHORT).show()
             return
         }
 
+        val fileName = "IMG_${System.currentTimeMillis()}.jpg"
+
         val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, "IMG_${System.currentTimeMillis()}.jpg")
+            put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/Caica")
+                put(MediaStore.Images.Media.RELATIVE_PATH, "DCIM/Camera")
             }
         }
 
-        val outputUri: Uri? = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+        val uri: Uri? = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
 
-        if (outputUri != null) {
-            val outputOptions = ImageCapture.OutputFileOptions.Builder(contentResolver, outputUri, contentValues).build()
+        if (uri == null) {
+            Toast.makeText(this, "Erro ao criar arquivo na galeria!", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-            imageCapture.takePicture(
-                outputOptions,
-                ContextCompat.getMainExecutor(this),
-                object : ImageCapture.OnImageSavedCallback {
-                    override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                        Toast.makeText(applicationContext, "Foto salva na galeria!", Toast.LENGTH_SHORT).show()
-                        Log.d("CameraX", "Foto salva em: $outputUri")
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(contentResolver, uri, contentValues).build()
 
+        imageCapture.takePicture(
+            outputOptions,
+            ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    Toast.makeText(applicationContext, "Foto salva na galeria!", Toast.LENGTH_SHORT).show()
+                    Log.d("CameraX", "Foto salva em: $uri")
 
-                        val scanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
-                        scanIntent.data = outputUri
-                        sendBroadcast(scanIntent)
+                    refreshGallery(uri)
+
+                    val intent = Intent(Intent.ACTION_VIEW).apply {
+                        setDataAndType(uri, "image/jpeg")
+                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     }
-
-                    override fun onError(exception: ImageCaptureException) {
-                        Toast.makeText(applicationContext, "Erro ao capturar foto: ${exception.message}", Toast.LENGTH_SHORT).show()
-                        Log.e("CameraX", "Erro ao salvar imagem", exception)
-                    }
+                    startActivity(intent)
                 }
-            )
-        } else {
-            Toast.makeText(applicationContext, "Erro ao acessar a galeria", Toast.LENGTH_SHORT).show()
+
+                override fun onError(exception: ImageCaptureException) {
+                    Toast.makeText(applicationContext, "Erro ao capturar foto: ${exception.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("CameraX", "Erro ao salvar imagem", exception)
+                }
+            }
+        )
+    }
+
+    private fun refreshGallery(uri: Uri) {
+        MediaScannerConnection.scanFile(
+            this,
+            arrayOf(uri.path),
+            arrayOf("image/jpeg")
+        ) { _, scannedUri ->
+            Log.d("CameraX", "Galeria atualizada para: $scannedUri")
         }
     }
 
@@ -144,7 +173,6 @@ class scanActivity : AppCompatActivity() {
         ).apply {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                 add(Manifest.permission.READ_EXTERNAL_STORAGE)
-                add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             } else {
                 add(Manifest.permission.READ_MEDIA_IMAGES)
             }

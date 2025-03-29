@@ -1,9 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <uses-feature
         android:name="android.hardware.camera.any"
         android:required="true" />
+
 
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,9 +16,9 @@
 
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="35"/>
+        android:maxSdkVersion="32"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="27"/>
+        android:maxSdkVersion="28"/>
 
     <application
         android:allowBackup="true"
@@ -31,9 +33,11 @@
         android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="31">
 
+
         <activity
             android:name=".initActivity"
             android:exported="true"
+            android:theme="@style/Theme.Caica"
             android:hardwareAccelerated="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,13 +45,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Infos" />
+
+        <activity android:name=".Infos"
+            android:theme="@style/Theme.Caica"/>
+
         <activity android:name=".scanActivity"
+            android:theme="@style/Theme.Caica"
             android:exported="true"/>
 
         <activity android:name=".CatalogoActivity"
-            android:hardwareAccelerated="false"/>
-
+            android:theme="@style/Theme.Caica"
+            android:exported="true"/>
     </application>
 
 </manifest>

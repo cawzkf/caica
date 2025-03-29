@@ -57,7 +57,6 @@ data class Planta(
     @SerializedName("IMAGEM")
     val IMAGEM: String? = null
 ) : Parcelable {
-    // Funções de conveniência para evitar nulls
     fun getNomePopular() = NOME_POPULAR.ifEmpty { "Nome desconhecido" }
     fun getNomeCientifico() = NOME_CIENTIFICO.ifEmpty { "Nome científico desconhecido" }
     fun getImagemUrl() = IMAGEM?.replace("localhost", "192.168.0.100") ?: ""

@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     // URL dinâmica para alternar entre produção, teste e desenvolvimento
-    private const val BASE_URL_DEV = "http://192.168.0.100:3000/" // Note a barra no final
+    private const val BASE_URL_DEV = "http://192.168.0.100:3000/"
     private const val BASE_URL_PROD = ""
     private val BASE_URL = BASE_URL_DEV
 
