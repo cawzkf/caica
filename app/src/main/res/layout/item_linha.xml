@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Layout usado em uma Activity para exibir uma lista de plantas.
+    Contém apenas um RecyclerView que preenche toda a tela.
+-->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -6,6 +11,8 @@
     android:orientation="vertical"
     android:padding="8dp">
 
+    <!-- RecyclerView responsável por listar os cards das plantas.
+         Cada item será inflado a partir do layout item_planta.xml -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_plantas"
         android:layout_width="match_parent"

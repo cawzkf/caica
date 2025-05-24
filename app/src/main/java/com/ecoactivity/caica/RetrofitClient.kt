@@ -6,40 +6,44 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+/**
+ * Objeto singleton responsável por configurar e expor o cliente Retrofit
+ * Utiliza OkHttp com interceptor de log e timeouts definidos
+ */
 object RetrofitClient {
-    // URL dinâmica para alternar entre produção, teste e desenvolvimento
-    private const val BASE_URL_DEV = "http://192.168.0.100:3000/"
-    private const val BASE_URL_PROD = ""
-    private val BASE_URL = BASE_URL_DEV
 
-    // Criando um interceptor para log das requisições (apenas para debugging)
+    // URL base da API em produção (AWS Lambda)
+    private const val BASE_URL_PROD = "https://hapufnlfvskmsslgghhmjva5me0fuerq.lambda-url.us-east-1.on.aws/"
+    private const val BASE_URL = BASE_URL_PROD // pode ser trocada por uma URL de teste se necessário
+
+    // Interceptor para exibir logs das requisições no Logcat (útil para debug)
     private val loggingInterceptor by lazy {
         HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
     }
 
-    // Configurando OkHttpClient com timeout, logging e retry automático
+    // Cliente HTTP personalizado com log, timeouts e tentativa automática de reconexão
     private val client by lazy {
         OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor) // Adiciona log das requisições para debugging
-            .connectTimeout(15, TimeUnit.SECONDS) // Tempo máximo de conexão reduzido para melhor resposta
-            .readTimeout(15, TimeUnit.SECONDS) // Tempo máximo de leitura
-            .writeTimeout(15, TimeUnit.SECONDS) // Tempo máximo de escrita
-            .retryOnConnectionFailure(true) // Tenta reconectar automaticamente em caso de falha
+            .addInterceptor(loggingInterceptor)
+            .connectTimeout(15, TimeUnit.SECONDS) // tempo máximo para abrir conexão
+            .readTimeout(15, TimeUnit.SECONDS)    // tempo máximo para leitura de resposta
+            .writeTimeout(15, TimeUnit.SECONDS)   // tempo máximo para envio de dados
+            .retryOnConnectionFailure(true)       // tenta novamente em caso de falha de rede
             .build()
     }
 
-    // Criando uma instância única do Retrofit
+    // Instância Retrofit configurada com client e conversor Gson
     private val retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .client(client) // Usa o cliente configurado
-            .addConverterFactory(GsonConverterFactory.create()) // Converte JSON automaticamente
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create()) // converte JSON para objetos Kotlin
             .build()
     }
 
-    // Criando uma instância única do serviço da API
+    // Serviço Retrofit que implementa a interface PlantaService
     val plantaService: PlantaService by lazy {
         retrofit.create(PlantaService::class.java)
     }

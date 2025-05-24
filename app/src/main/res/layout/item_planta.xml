@@ -11,43 +11,52 @@
     android:clickable="true"
     android:focusable="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@color/branco">
+    <!--
+        Layout que representa um item da lista de plantas no RecyclerView
+        Esse layout é inflado pelo Adapter q é o PlantaAdapter.kt.
+    -->
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imagem_planta"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/imagem_da_planta"
-            android:background="@drawable/cardview_plantas"
-            android:clipToOutline="true"
-            android:elevation="2dp"/>
-
-        <TextView
-            android:id="@+id/nome_planta"
+        <!-- Estrutura vertical com imagem e textos -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/verde_escuro"
-            android:maxLines="1"
-            android:ellipsize="end"/>
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@color/branco">
 
-        <TextView
-            android:id="@+id/nome_cientifico"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="14sp"
-            android:textColor="@color/preto"
-            android:maxLines="1"
-            android:ellipsize="end"/>
-    </LinearLayout>
+            <!-- Imagem da planta -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imagem_planta"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/imagem_da_planta"
+                android:background="@drawable/cardview_plantas"
+                android:clipToOutline="true"
+                android:elevation="2dp"/>
 
-</androidx.cardview.widget.CardView>
+            <!-- Nome popular da planta -->
+            <TextView
+                android:id="@+id/nome_planta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/verde_escuro"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
+            <!-- Nome científico da planta -->
+            <TextView
+                android:id="@+id/nome_cientifico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="14sp"
+                android:textColor="@color/preto"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>

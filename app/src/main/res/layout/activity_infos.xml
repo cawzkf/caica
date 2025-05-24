@@ -1,3 +1,5 @@
+
+<!-- Tela rolável com os detalhes completos da planta -->
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -5,12 +7,14 @@
     android:padding="16dp"
     android:background="@color/branco">
 
+    <!-- Título centralizado da tela -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="8dp">
 
+        <!-- Título centralizado da tela -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,14 +26,16 @@
             android:layout_gravity="center"
             android:layout_marginBottom="12dp"/>
 
+        <!-- Imagem principal da planta -->
         <ImageView
             android:id="@+id/imagem_planta"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:scaleType="centerCrop"
             android:background="@drawable/barra"
             android:layout_marginBottom="16dp"/>
 
+        <!-- Blocos de informações com título + conteúdo para cada seção -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,6 +62,22 @@
 
         <TextView
             android:id="@+id/nome_cientifico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/preto"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Origem do Nome:"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/verde_escuro"/>
+
+        <TextView
+            android:id="@+id/origem_nome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
@@ -113,13 +135,45 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Uso Tradicional:"
+            android:text="Usos Tradicionais:"
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="@color/verde_escuro"/>
 
         <TextView
             android:id="@+id/uso_tradicional"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/preto"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parte Utilizada:"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/verde_escuro"/>
+
+        <TextView
+            android:id="@+id/parte_utilizada"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/preto"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modo de Preparo:"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/verde_escuro"/>
+
+        <TextView
+            android:id="@+id/modo_preparo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
@@ -141,5 +195,38 @@
             android:textSize="16sp"
             android:textColor="@color/preto"
             android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contraindicações:"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/verde_escuro"/>
+
+        <TextView
+            android:id="@+id/contra_indicacoes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/preto"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tags:"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/verde_escuro"/>
+
+        <TextView
+            android:id="@+id/tags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/preto"
+            android:layout_marginBottom="16dp"/>
+
     </LinearLayout>
 </ScrollView>

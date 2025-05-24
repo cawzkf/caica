@@ -1,12 +1,28 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <!--
+        Tema base personalizado do app "Caica", herdando de Theme.Material3.Light.NoActionBar.
+        - O app usará Material Design 3 (Material You)
+        - O tema é claro
+        - A ActionBar padrão está desativada
+    -->
     <style name="Base.Theme.Caica" parent="Theme.Material3.Light.NoActionBar">
+
+        <!-- Deixa a cor da barra de status transparente -->
         <item name="android:statusBarColor">@android:color/transparent</item>
+
+        <!-- Indica que a janela desenha o fundo da status bar (necessário para transparência funcionar corretamente) -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <!-- Define se os ícones da status bar devem ser escuros (false = ícones brancos, status bar escura ou transparente) -->
         <item name="android:windowLightStatusBar">false</item>
+
+        <!-- Cor de fundo padrão da janela do app (usando uma cor definida em colors.xml) -->
         <item name="android:windowBackground">@color/branco</item>
 
     </style>
 
+    <!-- Tema principal do app, herdando do tema base -->
     <style name="Theme.Caica" parent="Base.Theme.Caica" />
+
 </resources>

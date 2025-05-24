@@ -17,6 +17,17 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        //CREDENCIAIS
+        val ACCESS_KEY = project.findProperty("AWS_ACCESS_KEY")?.toString() ?: ""
+        val SECRET_KEY = project.findProperty("AWS_SECRET_KEY")?.toString() ?: ""
+
+        buildConfigField("String", "AWS_ACCESS_KEY", "\"$ACCESS_KEY\"")
+        buildConfigField("String", "AWS_SECRET_KEY", "\"$SECRET_KEY\"")
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
@@ -68,5 +79,14 @@ dependencies {
 
     // Glide (usando a versão do catalog)
     implementation(libs.glide)
-    kapt(libs.glide.compiler) // Apenas esta linha para o kapt do Glide
+    kapt(libs.glide.compiler)
+
+    // AWS SDK direto no formato Gradle
+    implementation("com.amazonaws:aws-android-sdk-s3:2.62.0")
+    implementation("com.amazonaws:aws-android-sdk-core:2.62.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+
+
 }
+

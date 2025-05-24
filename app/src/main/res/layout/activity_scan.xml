@@ -1,32 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Layout principal da tela de escaneamento de plantas -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scan"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/scan"
-    tools:context=".scanActivity"
-    android:background="#000000">
+    android:background="#000000"
+    tools:context=".scanActivity">
 
-
+    <!-- Visualização da câmera utilizando CameraX -->
     <androidx.camera.view.PreviewView
         android:id="@+id/camera_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-
-    <View
-        android:id="@+id/mask"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/ic_mira_scan"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-
+    <!-- Mira visual que aparece no centro da tela para guiar o usuário -->
     <ImageView
         android:id="@+id/mira_scan"
         android:layout_width="280dp"
@@ -37,30 +30,32 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
-    <TextView
-        android:id="@+id/texto_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Escaneando…"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/mira_scan"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-
+    <!-- Botão principal para capturar imagem da câmera -->
     <ImageButton
         android:id="@+id/botao_capturar"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:background="@drawable/camera"
+        android:contentDescription="Capturar imagem"
         android:elevation="8dp"
+        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="24dp"/>
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Botão para escolher uma imagem da galeria ao invés de usar a câmera -->
+    <ImageButton
+        android:id="@+id/botao_galeria"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/baseline_photo_library_24"
+        android:contentDescription="Selecionar da galeria"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/botao_capturar"
+        app:layout_constraintEnd_toStartOf="@id/botao_capturar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
