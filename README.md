@@ -1,64 +1,73 @@
-# Aplicativo de Análise e Identificação de Plantas Medicinais Indígenas
+# 🌿 Caíça - Aplicativo de Identificação de Plantas Medicinais Indígenas
 
-Caíça é um aplicativo desenvolvido em Kotlin no Android Studio para a identificação e análise de plantas medicinais indígenas, utilizando inteligência artificial e visão computacional. O app permite aos usuários capturar imagens de plantas e obter informações detalhadas sobre elas.
+**Caíça** é um aplicativo desenvolvido em **Kotlin** no **Android Studio** para identificar e catalogar plantas medicinais indígenas da Amazônia. Utilizando recursos da **AWS**, o app permite ao usuário tirar ou selecionar fotos de plantas e obter informações detalhadas com base em uma análise por similaridade de imagem.
 
-## Funcionalidades
-- Identificação de plantas medicinais por comparação de imagens
-- Exibição de informações detalhadas sobre cada planta, incluindo:
-  - Nome popular
-  - Nome científico
-  - Usos terapêuticos
-  - Propriedades medicinais
-  - Modo de uso
-  - Contraindicações
-  - Quando deve ser utilizado
-- Integração com Amazon RDS para armazenamento e gerenciamento dos dados do catálogo
-- Utilização de Amazon S3 para armazenamento seguro de imagens
+## ✨ Funcionalidades
 
-## Tecnologias Utilizadas
-- **Kotlin** - Linguagem principal do aplicativo
-- **Android Studio** - Ambiente de desenvolvimento
-- **OpenCV** - Biblioteca para comparação de imagens
-- **Amazon Web Services (S3, Lambda, RDS)** - Para armazenamento, processamento e gerenciamento dos dados
-- **Amazon RDS** - Banco de dados gerenciado para fornecer informações ao catálogo
-- **API REST** - Responsável pela comunicação entre o aplicativo e o banco de dados
+* 📷 Identificação de plantas a partir de imagens (câmera ou galeria)
+* 📚 Catálogo com:
 
-## Instalação e Configuração
+  * Nome popular e nome científico
+  * Propriedades medicinais e usos tradicionais
+  * Indicações terapêuticas e contraindicações
+  * Métodos de preparo e forma de uso
+  * Origem do nome e habitat natural
+* ☁️ Armazenamento seguro das imagens no **Amazon S3**
+* 🧠 Análise de imagem com **AWS Rekognition**
+* 🔍 Comparação com múltiplas imagens cadastradas por planta
+* 🗃️ Consulta a banco de dados **Amazon RDS** (SQL Server)
+
+## 🔧 Tecnologias Utilizadas
+
+* **Kotlin** — Linguagem principal do app
+* **Android Studio** — Ambiente de desenvolvimento
+* **AWS S3** — Armazenamento das imagens
+* **AWS Rekognition** — Reconhecimento de imagem e análise de similaridade
+* **AWS Lambda (públicas)** — Funções para processar a imagem e retornar os dados
+* **Amazon RDS (SQL Server)** — Banco de dados relacional com as informações das plantas
+* **Presigned URLs** — Upload direto das imagens do app para o S3
+
+## 🚀 Como Executar o Projeto
 
 ### Pré-requisitos
-- **Android Studio** instalado
-- **JDK** atualizado
-- Conta na **AWS** com **S3, Lambda e RDS** configurados
-- Servidor API (Node.js, .NET, ou outra tecnologia) configurado para consultar os dados do banco
 
-### Clonando o Repositório
-```sh
+* Android Studio instalado com SDK do Kotlin
+* JDK 11 ou superior
+* Conta na AWS com S3, Rekognition, RDS e Lambda configurados
+* Endpoints públicos das funções Lambda acessíveis diretamente pelo app
+
+### Clonando o Projeto
+
+```bash
 git clone https://github.com/cawzkf/caica.git
 cd caica
 ```
 
-### Rodando o Projeto
-```sh
+### Executando
+
+```bash
 ./gradlew assembleDebug
 ```
-Ou abra o projeto no **Android Studio** e clique em **Run**.
 
-## Identificação de Plantas
-O processo de identificação de plantas ocorre da seguinte forma:
+Ou abra no Android Studio e clique em **Run**.
 
-1. O usuário tira ou seleciona uma imagem da planta.
-2. A imagem é enviada para o **AWS S3** para armazenamento seguro.
-3. Uma função **AWS Lambda**, utilizando **OpenCV**, realiza a comparação da imagem enviada com imagens cadastradas no sistema.
-4. Se houver uma correspondência com alto nível de similaridade, o **ID da planta correspondente** é retornado.
-5. O aplicativo busca esse ID no **Amazon RDS** e exibe as informações completas ao usuário.
+## 🧠 Processo de Identificação
 
-## Backend
-- **API REST** - Responsável por consultar os dados no banco e retornar ao aplicativo
-- **AWS Lambda** - Executa um script em Python com **OpenCV** para análise de similaridade entre imagens
-- **Amazon RDS** - Banco de dados gerenciado para armazenar e recuperar as informações das plantas
+1. O usuário tira uma foto ou escolhe da galeria.
+2. A imagem é enviada diretamente ao bucket **Amazon S3** via uma **URL temporária (presigned URL)**.
+3. O nome da imagem é enviado a uma **função AWS Lambda pública**, que usa o **Rekognition** para comparar com imagens já cadastradas por planta (ex: `img/Murici/`, `img/Jambu/`, etc).
+4. Se uma planta for reconhecida, a Lambda retorna o nome correspondente.
+5. O app usa esse nome para consultar o **banco de dados RDS** e exibir as informações completas.
 
-## Repositório
-Repositório oficial: [Caíça](https://github.com/cawzkf/caica)
+## 📁 Organização no S3
 
-Desenvolvido por **cawzkf**.
+* `uploads/` — Imagens enviadas pelos usuários
+* `img/NOME_DA_PLANTA/` — Imagens base organizadas por planta
 
+## 📌 Repositório
+
+🔗 [Repositório no GitHub](https://github.com/cawzkf/caica)
+
+---
+
+Desenvolvido por **cawzkf** com foco educacional e científico 💚
