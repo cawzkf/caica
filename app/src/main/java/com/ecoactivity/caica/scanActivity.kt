@@ -44,6 +44,9 @@ class scanActivity : AppCompatActivity() {
     private lateinit var captureButton: ImageButton
     private lateinit var galeriaButton: ImageButton
 
+    // Controle de debounce para evitar múltiplos cliques rápidos
+    private var ultimoClique = 0L
+
     // URLs das Lambdas AWS
     private val lambdaPresignedUrl = "https://jgt3nyj3c2qngs6ujcohif4q2m0mgcqu.lambda-url.us-east-1.on.aws/"
     private val lambdaRekognitionUrl = "https://hpcrueuzcvf2h7o3veg3muurwu0vplbn.lambda-url.us-east-1.on.aws/"
@@ -65,13 +68,21 @@ class scanActivity : AppCompatActivity() {
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         // Clique no botão de captura da câmera
+        // Clique no botão de captura da câmera (com debounce)
         captureButton.setOnClickListener {
-            if (allPermissionsGranted()) takePicture()
-            else requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
+            if (isCliqueValido()) {
+                if (allPermissionsGranted()) takePicture()
+                else requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
+            }
         }
 
-        // Clique no botão de selecionar da galeria
-        galeriaButton.setOnClickListener { abrirGaleria() }
+        // Clique no botão de selecionar da galeria (com debounce)
+        galeriaButton.setOnClickListener {
+            if (isCliqueValido()) {
+                abrirGaleria()
+            }
+        }
+
 
         // Inicia câmera se tiver permissão
         if (allPermissionsGranted()) startCamera()
@@ -159,6 +170,7 @@ class scanActivity : AppCompatActivity() {
 
             if (file.length() < 5000) {
                 hideLoading()
+                isCapturing = false
                 Toast.makeText(this@scanActivity, "Imagem inválida (muito pequena)", Toast.LENGTH_SHORT).show()
                 return@launch
             }
@@ -166,6 +178,7 @@ class scanActivity : AppCompatActivity() {
             val presignedUrl = solicitarPresignedUrl(fileName)
             if (presignedUrl == null) {
                 hideLoading()
+                isCapturing = false
                 Toast.makeText(this@scanActivity, "Erro ao gerar URL temporária", Toast.LENGTH_SHORT).show()
                 return@launch
             }
@@ -173,6 +186,7 @@ class scanActivity : AppCompatActivity() {
             val sucessoUpload = uploadImagemParaPresignedUrl(file, presignedUrl)
             if (!sucessoUpload) {
                 hideLoading()
+                isCapturing = false
                 Toast.makeText(this@scanActivity, "Erro ao enviar para o S3", Toast.LENGTH_SHORT).show()
                 return@launch
             }
@@ -180,6 +194,7 @@ class scanActivity : AppCompatActivity() {
             showLoading("Analisando imagem...")
             val planta = identificarPlantaViaGet(fileName)
             hideLoading()
+            isCapturing = false
 
             if (planta != null) {
                 val intent = Intent(this@scanActivity, Infos::class.java).apply {
@@ -279,6 +294,18 @@ class scanActivity : AppCompatActivity() {
             false
         }
     }
+
+    // Verifica se o clique é válido (evita múltiplos cliques rápidos em sequência)
+    private fun isCliqueValido(): Boolean {
+        val agora = System.currentTimeMillis()
+        return if (agora - ultimoClique > 600) {
+            ultimoClique = agora
+            true
+        } else {
+            false
+        }
+    }
+
 
     // Chama a Lambda que identifica a planta com base na imagem enviada
     private suspend fun identificarPlantaViaGet(fileName: String): Planta? = withContext(Dispatchers.IO) {

@@ -14,6 +14,9 @@
     <!-- Visualização da câmera utilizando CameraX -->
     <androidx.camera.view.PreviewView
         android:id="@+id/camera_preview"
+        android:clickable="false"
+        android:focusable="false"
+        android:importantForAccessibility="no"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -41,6 +44,8 @@
         android:background="@drawable/camera"
         android:contentDescription="Capturar imagem"
         android:elevation="8dp"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,6 +56,8 @@
         android:id="@+id/botao_galeria"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:clickable="true"
+        android:focusable="true"
         android:background="@drawable/baseline_photo_library_24"
         android:contentDescription="Selecionar da galeria"
         android:layout_marginEnd="60dp"

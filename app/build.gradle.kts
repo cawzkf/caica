@@ -81,7 +81,7 @@ dependencies {
     implementation(libs.glide)
     kapt(libs.glide.compiler)
 
-    // AWS SDK direto no formato Gradle
+    // AWS SDK
     implementation("com.amazonaws:aws-android-sdk-s3:2.62.0")
     implementation("com.amazonaws:aws-android-sdk-core:2.62.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
